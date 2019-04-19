@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  margin: auto;
+  width: 90%;
 }
 
 .App-logo {
@@ -30,4 +31,140 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.register, .list {
+  padding: 15px;
+  background-color:white;
+  width: 50%;
+  border:1px solid #ddd;
+  box-shadow: 0px 0px 5px #ddd;
+  border-radius: 5px;
+  display: inline-block;
+}
+.list{
+  width: 40%;
+  vertical-align: top;
+  margin-left: 50px;
+}
+
+input[type=text], input[type=password], input[type="date"],input[type="file"], select{
+  width: calc(100% - 30px);
+  padding: 10px 20px 10px 10px;
+  margin: 5px 0 10px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  font-size: 15px;
+  font-family: cairo;
+  border-radius: 2px;
+}
+select {
+  height: 40px;
+  width: 100%;
+}
+input[type=text]:focus, input[type=password]:focus,input[type="file"]:focus ,input[type="date"]:focus, select:focus{
+  background-color: #ddd;
+  outline: none;
+}
+.registerbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  font-size: 16px;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+.submitBtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  opacity: 0.9;
+  font-size: 16px;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  float: right;
+}
+
+.rotateBtn {
+  background-color: #4fc38e;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  opacity: 0.9;
+  font-size: 16px;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.submitBtn:hover,.rotateBtn:hover {
+  opacity: 1;
+}
+.list div{
+  display: inline;
+  vertical-align: top;
+}
+.list img{
+  max-width: 200px;
+  margin: 10px;
+  margin-left: 50px;
+}
+.prevImg{
+  padding: 20px;
+  height: 75%;
+  overflow: hidden;
+}
+.prevImg img{
+  height: 100%;
+  margin: auto;
+}
+ul {
+  padding-left: 0px;
+}
+ul li{
+  list-style: none;
+  overflow: hidden;
+}
+
+b {
+  font-size: 14px;
+}
+.fright{
+  float: right;
+}
+.warning{
+  font-size: 12px;
+  color: red;
+}
+.rot1 { 
+  transform:rotate(90deg); -webkit-transform:rotate(90deg); -moz-transform:rotate(90deg); -o-transform:rotate(90deg); 
+}
+.rot2 { 
+  transform:rotate(180deg); -webkit-transform:rotate(180deg); -moz-transform:rotate(180deg); -o-transform:rotate(180deg); 
+}
+.rot3 { 
+  transform:rotate(270deg); -webkit-transform:rotate(270deg); -moz-transform:rotate(270deg); -o-transform:rotate(270deg); 
+}
+.rot4 { 
+  transform:rotate(360deg); -webkit-transform:rotate(360deg); -moz-transform:rotate(360deg); -o-transform:rotate(360deg); 
 }
