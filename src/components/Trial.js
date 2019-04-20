@@ -6,33 +6,6 @@ function Warning(props) {
     )
 }
 
-function Results(props) {
-    if (props.data.length == 0) {
-        return ''
-    } else {
-        return (
-            <div className="list">
-            <h2>Registered List</h2>
-            <p> List Registered</p>
-            <hr />
-            <ul>
-                <li>
-                    <div> {props.data} </div>
-                    <div> </div> -
-                    <div> </div>/
-                    <div> </div> - 
-                    <div> </div> -
-                    <div> </div>
-                    <div className="fright">
-                        &times;
-                    </div>
-                    <br />
-                </li>
-            </ul>
-        </div>
-        )
-    }
-}
 
 // export class Warning extends Component {
 //     render () {
@@ -63,35 +36,64 @@ export class Trial extends Component {
   }
 
   Reset(params) {
-      console.log('reset')
-    //   this.setState(this.state.name = '')
+      this.setState({
+          name: '',
+          birth: '',
+          status: ''
+      })
   }
 
   onSubmit = e => {
-      e.preventDefault();
-      let post = {
-          resname: this.state.name,
-          resbirth: this.state.birth
-      }
-      this.state.lists.push(post)
-      this.Reset()
-      console.log('e', this.state)
+    e.preventDefault();
+      
+    let post = {
+        resname: this.state.name,
+        resbirth: this.state.birth,
+        resstatus: this.state.status
+    }
+    if(this.state.lists.length == 0) {
+        this.state.lists.push(post)
+        this.Reset()
+    } else {
+        this.state.lists.forEach(x => {
+            if (x.resname != this.state.name) {
+                console.log('here')
+                this.state.lists.push(post)
+                this.Reset()
+            } else{
+                console.log('out')
+                this.Reset()
+            }
+        })
+    }
+    console.log('state', this.state.lists)
   }
 
   onChange = e => {
       this.setState({ [e.target.name]: e.target.value})
-    //   console.log('onchange', e.target)
-      if (e.target.value == '') {
-        this.state.warning = true
+      if (e.target.value === '') {
+        this.setState({
+            warning: true
+        })
       } else {
-        this.state.warning = false
+        this.setState({
+            warning: false
+        })
       }
   }
 
-  onChangeBirth = e => {
+ onChangeBirth = e => {
     this.setState({ [e.target.name]: e.target.value})
-    // console.log('onchange', e.target)
-}
+ }
+
+ fillStatus = e => {
+    this.setState({ [e.target.name]: e.target.value})
+    console.log('e', e)
+ }
+
+ deleteList = e => {
+     console.log('e', e)
+ }
 
   render() {
     let Warnings;
@@ -100,13 +102,13 @@ export class Trial extends Component {
     }
     const looping = this.state.lists.map((list,index) => (
         <li key={index}>
-            <div> {list.resname}</div>
-            <div> {list.resbirth}</div> -
-            <div> </div>/
-            <div> </div> - 
+            <div> {index + 1}.</div>
+            <div> {list.resname} </div> -
+            <div> {list.resbirth} </div>/
+            <div> {list.resstatus} </div> - 
             <div> </div> -
             <div> </div>
-            <div className="fright">
+            <div className="fright" onClick={this.deleteList}>
                 &times;
             </div>
             <br />
@@ -114,20 +116,6 @@ export class Trial extends Component {
     ));
     return (
       <div id='app'>
-        {/* <div className="overlay">
-            <div className="modal">
-            <span className="close">&times;</span>   
-            Preview Photo
-            <div className="prevImg" align="center"> 
-                <img id="output" />
-            </div>
-                <button type="button" className="rotateBtn">rotate</button>
-                <button type="button" className="submitBtn">Submit</button>
-            </div>
-        </div> */}
-
-        {/* form */}
-
         <div className="register">
         <form onSubmit={this.onSubmit}>
             <h2>Register</h2>
@@ -136,9 +124,15 @@ export class Trial extends Component {
             <label htmlFor="name"><b>Full Name</b></label>
             <input value={this.state.name} type="text" placeholder="Enter Name" name="name" onChange={this.onChange} />
             {Warnings}
-            {/* <div className="warning" v-show="warning">*Please Fill the name</div> */}
             <label htmlFor="birth"><b>Birth Place</b></label>
             <input value={this.state.birth} type="text" placeholder="Birth Place" name="birth" onChange={this.onChangeBirth} required />
+            <label htmlFor="marital"><b>Marital Status</b></label>
+            <select value={this.state.status} onChange={this.fillStatus} name='status'>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Divorce">Divorce</option>
+                <option value="Widowed">Widowed</option>
+            </select>
 
             {/* <label htmlFor="date"><b>Birth Date</b></label>
             <br />
@@ -165,32 +159,12 @@ export class Trial extends Component {
             <hr />
             <ul>
                 {looping}
-                {/* <li>
-                    <div>  </div>
-                    <div> </div> -
-                    <div> </div>/
-                    <div> </div> - 
-                    <div> </div> -
-                    <div> </div>
-                    <div className="fright">
-                        &times;
-                    </div>
-                    <br />
-                </li> */}
             </ul>
         </div>
-        {/* <Results data={this.state.lists} /> */}
+        
     </div>
     )
   }
 }
-
-// const mapStateToProps = (state) => ({
-  
-// })
-
-// const mapDispatchToProps = {
-  
-// }
 
 export default Trial;
