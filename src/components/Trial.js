@@ -6,21 +6,59 @@ function Warning(props) {
     )
 }
 
+class Looping extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+    } 
+    render () {
+        let loopings = this.props.todoItems.map((list,index) => {
+           return (
+            <Delete key={index} index={index} list={list} onRemove={this.props.deleteList}></Delete>
+           )
+        });
+        return (
+            <ul> {loopings} </ul>
+        )
+     }
+}
 
-// export class Warning extends Component {
-//     render () {
-//         return (
-//             <div className="warning">*Please Fill the name</div>
-//         )
-//     }
-// }
+class Delete extends Component {
+    constructor(props){
+        super(props);
+        this.state = {}
+    }
+    onRemove = e =>  {
+        var index = this.props.index
+        this.props.onRemove(index)
+        console.log('index delete', index)
+    }
+    render () {
+        return (
+            <li>
+                <div> {this.props.index + 1}.</div>
+                <div> {this.props.list.resname} </div> -
+                <div> {this.props.list.resbirth} </div> -
+                <div> {this.props.list.resstatus} </div> 
+                <div className="fright cursor" onClick={this.onRemove}>
+                    &times;
+                </div>
+                <br /><br />
+            </li>
+        )
+    }
+}
 
-export class Trial extends Component {
+class Trial extends Component {
   constructor(props) {
       super(props);
       this.state = {
         targetUrl: '',
-        lists: [],
+        lists: [
+            {resname: 'one',resbirth: '12',resstatus: 'Single'},
+            {resname: 'two',resbirth: '23',resstatus: 'Married'},
+            {resname: 'four',resbirth: '03',resstatus: 'Single'}
+        ],
         show: false,
         name: '',
         birth: '',
@@ -32,7 +70,6 @@ export class Trial extends Component {
         warning: false,
         position: ''
       }
-    //   this.submit = this.submit.bind(this)
   }
 
   Reset(params) {
@@ -51,21 +88,23 @@ export class Trial extends Component {
         resbirth: this.state.birth,
         resstatus: this.state.status
     }
-    if(this.state.lists.length == 0) {
-        this.state.lists.push(post)
-        this.Reset()
-    } else {
-        this.state.lists.forEach(x => {
-            if (x.resname != this.state.name) {
-                console.log('here')
-                this.state.lists.push(post)
-                this.Reset()
-            } else{
-                console.log('out')
-                this.Reset()
-            }
-        })
-    }
+    this.state.lists.push(post)
+    this.Reset()
+    // if(this.state.lists.length === 0) {
+    //     this.state.lists.push(post)
+    //     this.Reset()
+    // } else {
+    //     this.state.lists.forEach(x => {
+    //         if (x.resname !== this.state.name) {
+    //             console.log('here')
+    //             this.state.lists.push(post)
+    //             this.Reset()
+    //         } else{
+    //             console.log('out')
+    //             this.Reset()
+    //         }
+    //     })
+    // }
     console.log('state', this.state.lists)
   }
 
@@ -92,28 +131,35 @@ export class Trial extends Component {
  }
 
  deleteList = e => {
+     var setItems = this.state.lists
      console.log('e', e)
+     setItems.splice(e, 1)
+     this.setState({setItems: setItems })
  }
+    componentWillMount () {
+      console.log('moun1')
+    }
+    componentDidMount () {
+        console.log('moun2')
+    }
 
   render() {
     let Warnings;
     if (this.state.warning) {
         Warnings = <Warning />
     }
-    const looping = this.state.lists.map((list,index) => (
-        <li key={index}>
-            <div> {index + 1}.</div>
-            <div> {list.resname} </div> -
-            <div> {list.resbirth} </div>/
-            <div> {list.resstatus} </div> - 
-            <div> </div> -
-            <div> </div>
-            <div className="fright" onClick={this.deleteList}>
-                &times;
-            </div>
-            <br />
-        </li>
-    ));
+    // let looping = this.state.lists.map((list,index) => (
+    //     <li key={index}>
+    //         <div> {index + 1}.</div>
+    //         <div> {list.resname} </div> -
+    //         <div> {list.resbirth} </div>/
+    //         <div> {list.resstatus} </div> - 
+    //         <div className="fright cursor" onSubmit={this.deleteList(list)}>
+    //             &times;
+    //         </div>
+    //         <br /><br />
+    //     </li>
+    // ));
     return (
       <div id='app'>
         <div className="register">
@@ -133,23 +179,6 @@ export class Trial extends Component {
                 <option value="Divorce">Divorce</option>
                 <option value="Widowed">Widowed</option>
             </select>
-
-            {/* <label htmlFor="date"><b>Birth Date</b></label>
-            <br />
-            <input v-model="date" type="date" placeholder="Birth Date" name="date" required />
-            <br />
-            <label htmlFor="address"><b>Address</b></label>
-            <input v-model="address" type="text" placeholder="Address" name="address" required />
-            <label htmlFor="photo"><b>Upload Photo</b></label>
-            <input type="file" />
-            <br />
-            <label htmlFor="marital"><b>Marital Status</b></label>
-            <select v-model="status">
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-                <option value="Divorce">Divorce</option>
-                <option value="Widowed">Widowed</option>
-            </select> */}
             <button type="submit" className="registerbtn" >Register</button>
         </form>
         </div>
@@ -157,14 +186,14 @@ export class Trial extends Component {
             <h2>Registered List</h2>
             <p> List Registered</p>
             <hr />
-            <ul>
-                {looping}
-            </ul>
+            {/* {loopings} */}
+            <Looping todoItems={this.state.lists} deleteList={this.deleteList}></Looping>
         </div>
         
     </div>
     )
   }
 }
+
 
 export default Trial;

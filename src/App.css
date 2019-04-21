@@ -156,6 +156,9 @@ b {
   font-size: 12px;
   color: red;
 }
+.cursor{
+  cursor: pointer;
+}
 .rot1 { 
   transform:rotate(90deg); -webkit-transform:rotate(90deg); -moz-transform:rotate(90deg); -o-transform:rotate(90deg); 
 }
