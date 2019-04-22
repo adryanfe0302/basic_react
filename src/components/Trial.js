@@ -148,6 +148,7 @@ class Trial extends Component {
     if (this.state.warning) {
         Warnings = <Warning />
     }
+
     // let looping = this.state.lists.map((list,index) => (
     //     <li key={index}>
     //         <div> {index + 1}.</div>
