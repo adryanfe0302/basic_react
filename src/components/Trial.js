@@ -58,7 +58,8 @@ class Trial extends Component {
       this.state = {
         targetUrl: '',
         lists: [
-            {resamount: '10.00',resbirth: '12',resstatus: 'Single'}
+            {resamount: '10.00',resbirth: '12',resstatus: 'Single'},
+            {resamount: '13.00',resbirth: '13',resstatus: 'Married'}
         ],
         data: [],
         show: false,
@@ -132,9 +133,9 @@ class Trial extends Component {
     if (this.state.warning) {
         Warnings = <Warning />
     }
-    // const count = this.state.listsCur.map((x,i) => {
-    //     return <li key={i}>{x}</li>
-    // })
+    const count = this.state.lists.map((list,index) => {
+        return <option key={index} value={list.resbirth}>{list.resbirth}</option>
+    })
     console.log('fa', this.state.data)
     return (
       <div id='app'>
@@ -148,10 +149,17 @@ class Trial extends Component {
             <hr />
             <Looping todoItems={this.state.lists} deleteList={this.deleteList}></Looping>
             <br />
-            <input value={this.state.amount} type="text" placeholder="Enter Name" name="amount" onChange={this.onChange} />
-            {Warnings}
+            {/* <input value={this.state.amount} type="text" placeholder="Enter Name" name="amount" onChange={this.onChange} /> */}
+            <div className='flex'>
+                <select className='w70' value={this.state.status} onChange={this.fillStatus} name='status'>
+                    {count}
+                </select>
+                {Warnings}
+                <button type="submit" className="registerbtn w30">
+                Submit</button>
+            </div>
             <button type="submit" className="registerbtn">
-            + Add More Currencies</button>
+                + Add More Currencies</button>
         </form>
         </div>
     </div>

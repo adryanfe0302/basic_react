@@ -50,16 +50,17 @@ input[type=text]:focus, input[type=password]:focus,input[type="file"]:focus ,inp
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
-  font-size: 16px;
+  font-size: 14px;
   font-family: inherit;
-  text-transform: uppercase;
   letter-spacing: 2px;
 }
 
 .registerbtn:hover {
   opacity: 1;
 }
-
+select{
+  margin-top: 8px;
+}
 .submitBtn {
   background-color: #4CAF50;
   color: white;
@@ -91,6 +92,12 @@ b {
 }
 .w95{
   width: 95%;
+}
+.w70{
+  width: 70%;
+}
+.w30{
+  width: 30%;
 }
 .w5{
   width: 5%;
