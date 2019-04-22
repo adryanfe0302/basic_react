@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 function Warning(props) {
     return (
-        <div className="warning">*Please Fill the name</div>
+        <div className="warning">*Please Fill the Amount</div>
     )
 }
 
@@ -14,11 +14,13 @@ class Looping extends Component {
     render () {
         let loopings = this.props.todoItems.map((list,index) => {
            return (
+            <div className="list">
             <Delete key={index} index={index} list={list} onRemove={this.props.deleteList}></Delete>
+            </div>
            )
         });
         return (
-            <ul> {loopings} </ul>
+            <div> {loopings} </div>
         )
      }
 }
@@ -35,16 +37,17 @@ class Delete extends Component {
     }
     render () {
         return (
-            <li>
-                <div> {this.props.index + 1}.</div>
-                <div> {this.props.list.resname} </div> -
-                <div> {this.props.list.resbirth} </div> -
-                <div> {this.props.list.resstatus} </div> 
-                <div className="fright cursor" onClick={this.onRemove}>
-                    &times;
-                </div>
-                <br /><br />
-            </li>
+            <div className='flex'>
+            <div className='subFlex w95'>
+                <div className='inline'> IDR </div>
+                <div className='inline pull-right'> 123.434 </div>
+                <p><b>IDR - Indonesian Rupiah</b></p>
+                <p>1 USD = IDR 14.000,00</p>
+            </div>
+            <div className="subFlex cursor w5" align='center' onClick={this.onRemove}>
+                &times;
+            </div>
+            </div>
         )
     }
 }
@@ -55,20 +58,12 @@ class Trial extends Component {
       this.state = {
         targetUrl: '',
         lists: [
-            {resname: 'one',resbirth: '12',resstatus: 'Single'},
-            {resname: 'two',resbirth: '23',resstatus: 'Married'},
-            {resname: 'four',resbirth: '03',resstatus: 'Single'}
+            {resamount: '10.00',resbirth: '12',resstatus: 'Single'}
         ],
+        data: [],
         show: false,
-        name: '',
-        birth: '',
-        id: '',
-        date: '',
-        address: '',
-        filePhoto: '',
-        status: '',
-        warning: false,
-        position: ''
+        amount: '',
+        defaultAmount: '10'
       }
   }
 
@@ -84,27 +79,12 @@ class Trial extends Component {
     e.preventDefault();
       
     let post = {
-        resname: this.state.name,
+        resamount: this.state.amount,
         resbirth: this.state.birth,
         resstatus: this.state.status
     }
     this.state.lists.push(post)
     this.Reset()
-    // if(this.state.lists.length === 0) {
-    //     this.state.lists.push(post)
-    //     this.Reset()
-    // } else {
-    //     this.state.lists.forEach(x => {
-    //         if (x.resname !== this.state.name) {
-    //             console.log('here')
-    //             this.state.lists.push(post)
-    //             this.Reset()
-    //         } else{
-    //             console.log('out')
-    //             this.Reset()
-    //         }
-    //     })
-    // }
     console.log('state', this.state.lists)
   }
 
@@ -138,59 +118,42 @@ class Trial extends Component {
  }
     componentWillMount () {
       console.log('moun1')
+      console.log('mounted')
+      fetch('https://api.exchangeratesapi.io/latest?base=USD')
+      .then(res => res.json())
+      .then(data => this.setState({ data: data.rates}));
     }
-    componentDidMount () {
-        console.log('moun2')
-    }
+    // componentDidMount () {
+    //     console.log('moun2', this.state.listsCur)
+    // }
 
   render() {
     let Warnings;
     if (this.state.warning) {
         Warnings = <Warning />
     }
-
-    // let looping = this.state.lists.map((list,index) => (
-    //     <li key={index}>
-    //         <div> {index + 1}.</div>
-    //         <div> {list.resname} </div> -
-    //         <div> {list.resbirth} </div>/
-    //         <div> {list.resstatus} </div> - 
-    //         <div className="fright cursor" onSubmit={this.deleteList(list)}>
-    //             &times;
-    //         </div>
-    //         <br /><br />
-    //     </li>
-    // ));
+    // const count = this.state.listsCur.map((x,i) => {
+    //     return <li key={i}>{x}</li>
+    // })
+    console.log('fa', this.state.data)
     return (
       <div id='app'>
         <div className="register">
         <form onSubmit={this.onSubmit}>
-            <h2>Register</h2>
-            <p>Please fill in this form to create an account.</p>
+            {/* {count} - */}
+            <div className='flex'>
+                <h4 className='w95'>USD</h4>
+                <h4 className="w5">{this.state.defaultAmount}</h4>
+            </div>
             <hr />
-            <label htmlFor="name"><b>Full Name</b></label>
-            <input value={this.state.name} type="text" placeholder="Enter Name" name="name" onChange={this.onChange} />
+            <Looping todoItems={this.state.lists} deleteList={this.deleteList}></Looping>
+            <br />
+            <input value={this.state.amount} type="text" placeholder="Enter Name" name="amount" onChange={this.onChange} />
             {Warnings}
-            <label htmlFor="birth"><b>Birth Place</b></label>
-            <input value={this.state.birth} type="text" placeholder="Birth Place" name="birth" onChange={this.onChangeBirth} required />
-            <label htmlFor="marital"><b>Marital Status</b></label>
-            <select value={this.state.status} onChange={this.fillStatus} name='status'>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-                <option value="Divorce">Divorce</option>
-                <option value="Widowed">Widowed</option>
-            </select>
-            <button type="submit" className="registerbtn" >Register</button>
+            <button type="submit" className="registerbtn">
+            + Add More Currencies</button>
         </form>
         </div>
-        <div className="list">
-            <h2>Registered List</h2>
-            <p> List Registered</p>
-            <hr />
-            {/* {loopings} */}
-            <Looping todoItems={this.state.lists} deleteList={this.deleteList}></Looping>
-        </div>
-        
     </div>
     )
   }
