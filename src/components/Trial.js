@@ -122,11 +122,12 @@ class Trial extends Component {
       console.log('mounted')
       fetch('https://api.exchangeratesapi.io/latest?base=USD')
       .then(res => res.json())
-      .then(data => this.setState({ data: data.rates}));
+    //   .then(data => this.setState({ data: data.rates}));
+      .then(data => console.log('datax', data));
     }
-    // componentDidMount () {
-    //     console.log('moun2', this.state.listsCur)
-    // }
+    componentDidMount () {
+        console.log('data', this.state.data)
+    }
 
   render() {
     let Warnings;
@@ -141,7 +142,7 @@ class Trial extends Component {
       <div id='app'>
         <div className="register">
         <form onSubmit={this.onSubmit}>
-            {/* {count} - */}
+            {count} -
             <div className='flex'>
                 <h4 className='w95'>USD</h4>
                 <h4 className="w5">{this.state.defaultAmount}</h4>
