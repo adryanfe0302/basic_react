@@ -69,6 +69,7 @@ class Currency extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    console.log('am', this.state.amount)
     let resValue = this.state.defaultAmount
     let calValue = this.state.amount * this.state.defaultAmount.substr(4, this.state.defaultAmount.length)
 
@@ -101,6 +102,7 @@ class Currency extends Component {
         currency: resValue.substr(0,3),
         currencyName: currencyName,
         amount: calValue.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+        // amount: calValue,
         defaultAmount: resValue.substr(4, resValue.length),
     }
     this.state.lists.push(post)
@@ -108,18 +110,21 @@ class Currency extends Component {
   }
 
   onChange = e => {
+      console.log('e', e.target)
       this.setState({ [e.target.name]: e.target.value})
+      this.setState({ amount: e.target.value})
       this.state.data.forEach(x => {
          this.state.lists.forEach((xx,ii) => {
-             if(x[0] === xx.currency) {
-                 console.log('as1', this.state.amount)
-                 console.log('as2', xx.amount)
-                 console.log('as3', this.state.amount * xx.amount)
-                 let curValue =  this.state.amount * xx.amount
-                 console.log('cur', curValue)
-                //  let idVal = 
-                 
-                //  this.state.lists[ii].amount = curValue
+             if(x[0] === xx.currency) {         
+                 let curValue =  parseInt(e.target.value) * parseInt(xx.amount)
+                 console.log('state', e.target.value)
+                 console.log('amount', xx.amount)
+                 console.log('curValue', curValue)
+                 this.state.lists[ii].amount = curValue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                //  this.setState(list => {
+                //      this.state.lists[ii] = curValue
+                //      console.log('lix', this.state.lists)
+                //  })
              }
          })
       })
