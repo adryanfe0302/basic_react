@@ -113,21 +113,16 @@ class Currency extends Component {
       console.log('e', e.target)
       this.setState({ [e.target.name]: e.target.value})
       this.setState({ amount: e.target.value})
+      let list = this.state.lists
       this.state.data.forEach(x => {
-         this.state.lists.forEach((xx,ii) => {
+         list.forEach((xx,ii) => {
              if(x[0] === xx.currency) {         
-                 let curValue =  parseInt(e.target.value) * parseInt(xx.amount)
-                 console.log('state', e.target.value)
-                 console.log('amount', xx.amount)
-                 console.log('curValue', curValue)
-                 this.state.lists[ii].amount = curValue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                //  this.setState(list => {
-                //      this.state.lists[ii] = curValue
-                //      console.log('lix', this.state.lists)
-                //  })
+                 let curValue =  e.target.value * xx.defaultAmount
+                 xx.amount = curValue.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
              }
          })
       })
+      this.setState({lists: list})
   }
 
  onChangeBirth = e => {
