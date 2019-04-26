@@ -1,4 +1,8 @@
 
+#app{
+  padding: 15px;
+}
+
 .register, .list {
   padding: 15px;
   background-color:white;
@@ -8,6 +12,7 @@
   border-radius: 5px;
   display: inline-block;
 }
+
 .list{
   width: calc(100% - 20px);
   vertical-align: top;
@@ -88,8 +93,6 @@ b {
   display: flex;
   flex-wrap: nowrap;
 }
-.subFlex{
-}
 .w95{
   width: 95%;
 }
@@ -108,4 +111,10 @@ b {
 }
 .cursor{
   cursor: pointer;
+}
+.bigFont{
+  font-size: 22px;
+}
+.smallFont{
+  font-size: 12px;
 }
